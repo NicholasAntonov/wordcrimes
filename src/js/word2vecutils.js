@@ -13,10 +13,6 @@ var Word2VecUtils = (function() {
   /**********
    * config */
 
-  /*************
-   * constants */
-  var WORDS = Object.keys(wordVecs);
-
   /*********************
    * working variables */
 
