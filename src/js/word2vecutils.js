@@ -112,6 +112,12 @@ var Word2VecUtils = (function() {
     });
   }
 
+  function avgVecs(a, b) {
+    return a.map(function(val, idx) {
+      return val - b[idx]; 
+    });
+  }
+
   return {
     diffN: diffN,
     composeN: composeN,
