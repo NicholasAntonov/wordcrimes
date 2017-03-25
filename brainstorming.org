@@ -1,0 +1,42 @@
+#+TITLE:hackathon game rules
+
+* Basic premise
+
+  human is guesser,
+  computer gives words, or multiple words,
+  you have to guess them or you lose
+
+** specify more:
+
+   - how many mistakes are we allowed? 1? 3?
+   - how many words does the computer give you
+   - how many sets of words does the computer give you
+
+
+   a b c | d e f g h i
+
+   a + b + c - d - e - f - g - h - i -> vector
+
+   vector |> findNClosest numberOfHints 
+
+   (a b) + (c)
+
+
+* algorithm
+
+  this returns hints to the user
+
+  #+BEGIN_SRC
+  gen gameSize random words
+
+  pick solutionSize random from them to be solutions
+  all else are badWords
+
+  cluster by vector the solutions into numberOfHints groups
+
+  for each group
+    add all vectors in group
+    subtract sum of vectors in badWords
+    
+    |> findNClosest (numberOfHints / group.len)
+  #+END_SRC
