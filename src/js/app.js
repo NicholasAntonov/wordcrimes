@@ -1,12 +1,12 @@
 /* jshint esversion: 6 */
 'use-strict';
 
-gameSize = 25;
-answerCount = 8;
+gameSize = 7;
+answerCount = 3;
 
 function cluster () {
   const clusters = goodWords.map(baseWord => {
-    const s = new Set();
+    const s = [];
     let close;
     let best;
     let rest = [...totalWords];
@@ -16,17 +16,17 @@ function cluster () {
         .sort((a, b) => Word2VecUtils.getCosSim(wordVecs[baseWord], wordVecs[b]) - Word2VecUtils.getCosSim(wordVecs[baseWord], wordVecs[a]));
       best = close.shift();
       rest = close;
-      s.add(best);
-      clusterVec = wordVecs[baseWord].map((a, i) => _.mean([...s].map(c => wordVecs[c][i])));
+      s.push(best);
+      clusterVec = wordVecs[baseWord].map((a, i) => _.mean(s.map(c => wordVecs[c][i])));
     } while (goodWords.includes(rest[0]));
-    return [...s];
+    return s;
   }).map(arr => arr.sort());
   return _.uniqBy(clusters, a => a.join('|'));
 }
 
-function randomWords (n, wordVecs) {
+function randomWords (n, words) {
   return _.range(n)
-    .map(() => wordVecs[_.random(0, wordVecs.length - 1)]);
+    .map(() => words[_.random(0, words.length - 1)]);
 }
 
 window.onload = function() {
@@ -42,16 +42,20 @@ window.onload = function() {
       console.warn("Error fetching", err);
     })
     .then(body => {
-        window.wordVecs = body;
+      window.wordVecs = body;
+      window.allWords = Object.keys(body);
     })
     .then(() => {
       // gen gameSize random words
-      totalWords = randomWords(20, wordVecs);
+      totalWords = randomWords(gameSize, allWords);
 
+      console.log(totalWords);
       // pick solutionSize random from them to be solutions
       goodWords = _.sampleSize(totalWords, answerCount);
+      console.log(goodWords);
       // all else are badWords
       badWords = _.xor(totalWords, goodWords);
+      console.log(badWords);
 
 
       // cluster by vector the solutions into numberOfHints groups
