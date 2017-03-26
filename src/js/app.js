@@ -61,8 +61,7 @@ function clickWord(e) {
   var word = e.target.innerHTML;
   guessedWords.push(word);
   e.target.className = "word " + (goodWords.includes(word) ? "hit" : "miss");
-  numMisses.innerHTML = _.pull(guessedWords, ...goodWords).length;
-  console.log(e.target.className);
+  numMisses.innerHTML = _.pull(_.clone(guessedWords), ...goodWords).length;
   e.target.removeEventListener('click', clickWord, false);
   updateClues();
 }
@@ -89,7 +88,7 @@ function updateClues() {
 
 function synthesizeHint(words, clues, cluster) {
   // remove all the already guessed words from the cluster
-  _.pull(cluster, ...guessedWords);
+  _.remove(cluster, w => guessedWords.includes(w));
 
   var blob = words.join(" ");
   console.log(clues.join(", "), '->', cluster.join(", "));
