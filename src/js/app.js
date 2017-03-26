@@ -87,7 +87,7 @@ function updateClues() {
   let clues = hints.map((h, i)=>synthesizeHint(totalWords, h, clusters[i]));
   clues.sort((a, b) => a[0] - b[0]);
   clues = _.uniqBy(clues, a => a[1]);
-  clues = _.shuffle(clues);
+  clues = clues.sort((a, b) => (a[1] === b[1]) ? 0 : (a[1] < b[1]) ? -1 : 1);
 
 
   let clueList = document.querySelector("#clues");
@@ -221,7 +221,7 @@ function startGame() {
           return Word2VecUtils.subVecs(avgWords(cluster), badWordsSum);
         });
   hints = hintVectors
-        .map(hint => Word2VecUtils.getNClosestMatches(4, hint).map(arr => arr[0]));
+    .map((hint, index, array) => Word2VecUtils.getNClosestMatches(array.length + 4, hint).map(arr => arr[0]));
   console.log(hints);
 
   // |> findNClosest (numberOfHints / group.len)
