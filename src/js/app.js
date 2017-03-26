@@ -44,28 +44,48 @@ function addAll(words) {
 
 function populateUI(words, hints) {
   var wordList = document.querySelector("#words");
-  
+
   // empty the list of words
   while (wordList.hasChildNodes()) wordList.removeChild(wordList.lastChild);
-  
+
   // add all the words to the word list
   _.each(words, word => {
     var guessed = guessedWords.includes(word);
-    var div = document.createElement("div");
-    div.innerHTML = word;
-    div.className = "word";
-    if(!guessed)
-      div.addEventListener('click', clickWord);
-    wordList.appendChild(div);
+    var front = document.createElement('div');
+    var back = document.createElement('div');
+    front.innerText = word;
+    back.innerText = word;
+    front.className = 'front';
+    back.className = 'back';
+
+    var wordDiv = document.createElement('div');
+    wordDiv.className = 'word';
+    var flipper = document.createElement('div');
+    flipper.className = 'flipper';
+    flipper.appendChild(front);
+    flipper.appendChild(back);
+    wordDiv.appendChild(flipper);
+    wordList.appendChild(wordDiv);
+    if(!guessed) {
+      front.addEventListener('click', clickWord, true);
+    }
   });
 
   updateClues();
 }
 
 function clickWord(e) {
-  var word = e.target.innerHTML;
+  var word = e.target.innerText.toLowerCase();
+  var target = e.target.closest('.word');
+
+  // Don't penalize user for guessing the same wrong word twice
+  if (guessedWords.includes(word)) {
+    return;
+  }
+  console.log(guessedWords, word);
   guessedWords.push(word);
-  e.target.className = "word " + (goodWords.includes(word) ? "hit" : "miss");
+
+  target.classList.add(goodWords.includes(word) ? "hit" : "miss");
   if(goodWords.includes(word)){
     //then we have a correct word.. sub from rightleft
     rightLeft--;
@@ -78,7 +98,7 @@ function clickWord(e) {
   if(numMisses.innerHTML == MAXMISSES){
     endGame("lose");
   }
-  e.target.removeEventListener('click', clickWord, false);
+  target.removeEventListener('click', clickWord, false);
   updateClues();
 }
 
