@@ -3,6 +3,7 @@
 
 gameSize = 26;
 answerCount = 9;
+MAXMISSES = 3;
 
 function cluster () {
   const clusters = goodWords.map(baseWord => {
@@ -62,6 +63,10 @@ function clickWord(e) {
   guessedWords.push(word);
   e.target.className = "word " + (goodWords.includes(word) ? "hit" : "miss");
   numMisses.innerHTML = _.pull(_.clone(guessedWords), ...goodWords).length;
+  //check to see if numMisses exceeds limit
+  if(numMisses.innerHTML == MAXMISSES){
+    endGame("lose");
+  }
   e.target.removeEventListener('click', clickWord, false);
   updateClues();
 }
@@ -180,3 +185,23 @@ window.onload = function() {
     })
     .then(clickStartGame);
 };
+
+function endGame(which) {
+  if(which=="lose") {
+    window.requestAnimationFrame(()=>{
+      loosingOverlay.style.display = "flex";
+      content.style.filter="blur(5px)";
+      numMisses.innerHTML = 0;
+
+      // empty the list of clues and words
+      var clueList = document.querySelector("#clues");
+      while (clueList.hasChildNodes()) clueList.removeChild(clueList.lastChild);
+      var wordList = document.querySelector("#words");
+      while (wordList.hasChildNodes()) wordList.removeChild(wordList.lastChild);
+
+      
+    });
+  }else{
+    //win
+  }
+}
