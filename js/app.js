@@ -6,7 +6,7 @@ answerCount = 9;
 rightLeft = answerCount;
 MAXMISSES = 3;
 var holdWords = [];
-var dictionaryRoute = "js/json/wordvecs1000.json";
+var dictionaryRoute = "js/json/glove_small_dict.json";
 var mode = "normal";
 
 function cluster () {
