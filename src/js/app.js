@@ -114,8 +114,9 @@ function synthesizeHint(words, clues, cluster) {
   console.log(clues.join(", "), '->', cluster.join(", "));
   for(var i = 0; i < clues.length; i++) {
     var hint = clues[i];
-    if(blob.indexOf(hint) == -1) // because "designer" can be inside "designers"
+    if(blob.indexOf(hint) == -1){ // because "designer" can be inside "designers"
       return [cluster.length, hint];
+    }
       
   }
   return [cluster.length, clues[0] + " CHEAT"]; // shit
@@ -155,8 +156,6 @@ function clickStartGame() {
       //console.log(window.allWords);
     })
     // .then(clickStartGame);
-
-
 
 
   //popup1.style.display = "none";
