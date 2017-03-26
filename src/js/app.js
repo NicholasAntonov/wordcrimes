@@ -6,6 +6,8 @@ answerCount = 9;
 rightLeft = answerCount;
 MAXMISSES = 3;
 var holdWords = [];
+var dictionaryRoute = "js/json/wordvecs1000.json";
+var mode = "normal";
 
 function cluster () {
   const clusters = goodWords.map(baseWord => {
@@ -116,6 +118,43 @@ function synthesizeHint(words, clues, cluster) {
 }
 
 function clickStartGame() {
+
+  if(mode=="sat"){
+    //get SAT words to be intersection with our words..
+    fetch("js/json/freevocabulary_words.json")
+      .then(resp => {
+        return resp.json();
+      })
+      .catch(err => {
+        console.warn("Error fetching", err);
+      })
+      .then(body => {
+        window.counters = body;
+        for (var i = 0; window.counters.length>i; i++) {
+          holdWords.push(window.counters[i].word);
+        }
+      })
+    }
+  console.log("Here");
+  fetch(dictionaryRoute)
+    .then(resp => {
+      return resp.json();
+    })
+    .catch(err => {
+      console.warn("Error fetching", err);
+    })
+    .then(body => {
+      window.wordVecs = body;
+      window.allWords = Object.keys(body);
+      console.log(allWords);
+      //this is where I should do the union between the two arrays? try it
+      //console.log(window.allWords);
+    })
+    // .then(clickStartGame);
+
+
+
+
   //popup1.style.display = "none";
   loosingOverlay.style.display = "none";
   winningOverlay.style.display = "none";
@@ -139,8 +178,10 @@ function clickStartGame() {
 function startGame() {
 
   // gen gameSize random words
-  var inter = _.intersection(holdWords, allWords); //get the intersection of the words
-
+  var inter
+  if(mode=="sat")
+    inter = _.intersection(holdWords, allWords); //get the intersection of the words
+  inter=allWords;
   totalWords = randomWords(gameSize, inter);
 
   guessedWords = [];
@@ -183,25 +224,6 @@ function startGame() {
 
 window.onload = function() {
   content.style.filter="blur(5px)";
-
-  //var dictionaryRoute = "js/json/wordvecs25000.json";
-  var dictionaryRoute = "js/json/glove_small_dict.json";
-
-  //get SAT words to be intersection with our words..
-  fetch("js/json/freevocabulary_words.json")
-    .then(resp => {
-      return resp.json();
-    })
-    .catch(err => {
-      console.warn("Error fetching", err);
-    })
-    .then(body => {
-      window.counters = body;
-      for (var i = 0; window.counters.length>i; i++) {
-        holdWords.push(window.counters[i].word);
-      }
-    })
-    
   fetch(dictionaryRoute)
     .then(resp => {
       return resp.json();
@@ -212,10 +234,12 @@ window.onload = function() {
     .then(body => {
       window.wordVecs = body;
       window.allWords = Object.keys(body);
+      console.log(allWords);
       //this is where I should do the union between the two arrays? try it
       //console.log(window.allWords);
     })
     .then(clickStartGame);
+  //took the json stuff and put it in clickStartGame function..
 };
 
 function endGame(which) {
@@ -250,5 +274,29 @@ function endGame(which) {
 }
 
 function adjustSettings(){
-  
+  var select = document.getElementById("amountOfWords");
+  console.log(select);
+  var words = select.options[select.selectedIndex].value;
+  dictionaryRoute = "js/json/wordvecs" + words + ".json";
+
+  select = document.getElementById("diff");
+  var diff = select.options[select.selectedIndex].value;
+  if(diff=="easy"){
+    MAXMISSES = 5;
+  }else if(diff=="normal"){
+    MAXMISSES=3;
+  }else{
+    MAXMISSES=1;
+  }
+
+
+  select = document.getElementById("mode");
+  var mode = select.options[select.selectedIndex].value;
+  if(mode=="sat"){
+    mode="sat";
+  }else{
+    mode="normal";
+  }
+
+  clickStartGame();
 }
