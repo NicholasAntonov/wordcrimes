@@ -277,7 +277,12 @@ function adjustSettings(){
   var select = document.getElementById("amountOfWords");
   console.log(select);
   var words = select.options[select.selectedIndex].value;
-  dictionaryRoute = "js/json/wordvecs" + words + ".json";
+
+  if(words=="complex"){
+    dictionaryRoute = "js/json/glove_small_dict.json"
+  }else{
+    dictionaryRoute = "js/json/wordvecs" + words + ".json";
+  }
 
   select = document.getElementById("diff");
   var diff = select.options[select.selectedIndex].value;
@@ -289,6 +294,7 @@ function adjustSettings(){
     MAXMISSES=1;
   }
 
+  document.getElementById('maxMisses').innerHTML = MAXMISSES;
 
   select = document.getElementById("mode");
   var mode = select.options[select.selectedIndex].value;
@@ -298,5 +304,22 @@ function adjustSettings(){
     mode="normal";
   }
 
+  popup1.style.opacity = "0";
+  popup1.style.display = "none";
+  popup1.style.visibility = "hidden";
+
   clickStartGame();
+}
+
+function showPopUp(){
+  popup1.style.opacity = "1";
+  popup1.style.display = "flex";
+  popup1.style.visibility = "visible";
+  console.log("Here");
+}
+
+function closePopUp(){
+  popup1.style.opacity = "0";
+  popup1.style.display = "flex";
+  popup1.style.visibility = "hidden";
 }
