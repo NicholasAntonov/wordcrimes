@@ -44,10 +44,10 @@ function addAll(words) {
 
 function populateUI(words, hints) {
   var wordList = document.querySelector("#words");
-
+  
   // empty the list of words
   while (wordList.hasChildNodes()) wordList.removeChild(wordList.lastChild);
-
+  
   // add all the words to the word list
   _.each(words, word => {
     var guessed = guessedWords.includes(word);
@@ -75,17 +75,9 @@ function populateUI(words, hints) {
 }
 
 function clickWord(e) {
-  var word = e.target.innerText.toLowerCase();
-  var target = e.target.closest('.word');
-
-  // Don't penalize user for guessing the same wrong word twice
-  if (guessedWords.includes(word)) {
-    return;
-  }
-  console.log(guessedWords, word);
+  var word = e.target.innerHTML;
   guessedWords.push(word);
-
-  target.classList.add(goodWords.includes(word) ? "hit" : "miss");
+  e.target.className = "word " + (goodWords.includes(word) ? "hit" : "miss");
   if(goodWords.includes(word)){
     //then we have a correct word.. sub from rightleft
     rightLeft--;
@@ -98,7 +90,7 @@ function clickWord(e) {
   if(numMisses.innerHTML == MAXMISSES){
     endGame("lose");
   }
-  target.removeEventListener('click', clickWord, false);
+  e.target.removeEventListener('click', clickWord, false);
   updateClues();
 }
 

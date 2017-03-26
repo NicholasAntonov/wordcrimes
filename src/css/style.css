@@ -64,12 +64,15 @@ content {
   min-height: 300px;
 }
 
+
 /* FLIPPER */
 .front, .back {
+
   break-inside: avoid;
   font-family: monospace;
   font-style: italic;
   justify-content: center;
+  margin-top: 10px;
   text-transform: uppercase;
 
   position: absolute;
@@ -124,6 +127,7 @@ content {
   text-decoration: line-through;
 }
 
+
 .word-container .word-list > .word.hit .flipper {
   background-color: #cfc;
 }
@@ -133,6 +137,8 @@ content {
 }
 
 .word-container .word-list > .word:not(.miss):not(.hit):hover {
+  background-color: #fff;
+  box-shadow: 0 4px 8px #888;
   z-index: 3;
 }
 
@@ -188,7 +194,6 @@ footer {
 .info-panel .row {
   display: flex;
   flex-direction: row;
-  align-items: center;
 }
 
 .info-panel .row .header {
@@ -336,9 +341,4 @@ button:focus {
 .settingsContainer {
   margin: 0 auto;
   width: 50%;
-}
-
-.menu-icon {
-  width: 40px;
-  height: 40px;
 }
