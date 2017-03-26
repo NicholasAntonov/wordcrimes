@@ -189,6 +189,7 @@ function startGame() {
     inter=allWords;
   }
   totalWords = randomWords(gameSize, inter);
+  console.log('TOTAL LEN', inter.length);
 
   guessedWords = [];
 
