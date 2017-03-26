@@ -84,9 +84,13 @@ function clickWord(e) {
 
 // updates the clue render
 function updateClues() {
-  var clues = hints.map((h, i)=>synthesizeHint(totalWords, h, clusters[i]));
+  let clues = hints.map((h, i)=>synthesizeHint(totalWords, h, clusters[i]));
+  clues.sort((a, b) => a[0] - b[0]);
+  clues = _.uniqBy(clues, a => a[1]);
+  clues = _.shuffle(clues);
 
-  var clueList = document.querySelector("#clues");
+
+  let clueList = document.querySelector("#clues");
 
   // empty the list of clues
   while (clueList.hasChildNodes()) clueList.removeChild(clueList.lastChild);
