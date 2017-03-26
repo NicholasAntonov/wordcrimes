@@ -116,6 +116,7 @@ function synthesizeHint(words, clues, cluster) {
 }
 
 function clickStartGame() {
+  //popup1.style.display = "none";
   loosingOverlay.style.display = "none";
   winningOverlay.style.display = "none";
   window.requestAnimationFrame(()=>{
@@ -246,4 +247,8 @@ function endGame(which) {
       
     });
   }
+}
+
+function adjustSettings(){
+  
 }

@@ -87,16 +87,43 @@
       </div>
     </div>
 
-    <!-- SHIT !-->
     <div id="popup1" class="settingsOver">
       <div class="popup">
         <h2>Here i am</h2>
         <a class="close" href="#">&times;</a>
         <div class="settingsContent">
           Adjust the difficulty, change the mode, or change the amount of words!
+          <!-- Issac make this prettier !-->
+          <br>
+          <div>
+            Change the difficulty:
+            <select>
+              <option value="easy">Easy</option>
+              <option value="normal">Normal</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+
+          <div>
+            Change the amount of words:
+            <select>
+              <option value="1000">1000</option>
+              <option value="5000">5000</option>
+              <option value="10000">10000</option>
+              <option value="25000">25000</option>
+            </select>
+          </div>
+
+          <div>
+            Change the mode:
+            <select>
+              <option value="normal">Normal</option>
+              <option value="sat">SAT</option>
+            </select>
+          </div>
 
           <div class="settingsContainer">
-            <button onclick="clickStartGame()">Reset the game with your settings!</button>
+            <button onclick="adjustSettings()">Reset the game with these settings!</button>
           </div> 
         </div>
       </div>
