@@ -1,6 +1,6 @@
 # Word Crime
 
-###### This project was made for [duckhacks](https://www.duckhacks.com) at [Stevens Institute of Technology](https://www.stevens.edu)
+###### This project was made for [duckhacks](http://www.duckhacks.com) at [Stevens Institute of Technology](https://www.stevens.edu)
 
 ## Premise
 You, the player, are a detective in the field, and the only resource you have is an AI that is trained to connect clues.
