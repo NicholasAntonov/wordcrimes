@@ -269,7 +269,7 @@ button:focus {
   border-radius: 5px;
   width: 50%;
   position: relative;
-  transition: all 5s ease-in-out;
+  transition: all 2s ease-in-out;
 }
 
 .popup h2 {
