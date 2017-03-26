@@ -179,9 +179,12 @@ function startGame() {
 
   // gen gameSize random words
   var inter
-  if(mode=="sat")
+  if(mode=="sat") {
     inter = _.intersection(holdWords, allWords); //get the intersection of the words
-  inter=allWords;
+  }
+  else {
+    inter=allWords;
+  }
   totalWords = randomWords(gameSize, inter);
 
   guessedWords = [];
@@ -297,8 +300,8 @@ function adjustSettings(){
   document.getElementById('maxMisses').innerHTML = MAXMISSES;
 
   select = document.getElementById("mode");
-  var mode = select.options[select.selectedIndex].value;
-  if(mode=="sat"){
+  var themode = select.options[select.selectedIndex].value;
+  if(themode=="sat"){
     mode="sat";
   }else{
     mode="normal";
