@@ -307,12 +307,12 @@ function adjustSettings(){
   document.getElementById('maxMisses').innerHTML = MAXMISSES;
 
   select = document.getElementById("mode");
-  var themode = select.options[select.selectedIndex].value;
-  if(themode=="sat"){
-    mode="sat";
-  }else{
+  // var themode = select.options[select.selectedIndex].value;
+  // if(themode=="sat"){
+  //   mode="sat";
+  // }else{
     mode="normal";
-  }
+  // }
 
   popup1.style.opacity = "0";
   popup1.style.display = "none";
