@@ -164,8 +164,8 @@ function startGame() {
 window.onload = function() {
   content.style.filter="blur(5px)";
 
-  var dictionaryRoute = "js/json/wordvecs25000.json";
-  //var dictionaryRoute = "js/json/glove_small_dict.json";
+  //var dictionaryRoute = "js/json/wordvecs25000.json";
+  var dictionaryRoute = "js/json/glove_small_dict.json";
 
   fetch(dictionaryRoute)
     .then(resp => {
