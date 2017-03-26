@@ -44,28 +44,48 @@ function addAll(words) {
 
 function populateUI(words, hints) {
   var wordList = document.querySelector("#words");
-  
+
   // empty the list of words
   while (wordList.hasChildNodes()) wordList.removeChild(wordList.lastChild);
-  
+
   // add all the words to the word list
   _.each(words, word => {
     var guessed = guessedWords.includes(word);
-    var div = document.createElement("div");
-    div.innerHTML = word;
-    div.className = "word";
-    if(!guessed)
-      div.addEventListener('click', clickWord);
-    wordList.appendChild(div);
+    var front = document.createElement('div');
+    var back = document.createElement('div');
+    front.innerText = word;
+    back.innerText = word;
+    front.className = 'front';
+    back.className = 'back';
+
+    var wordDiv = document.createElement('div');
+    wordDiv.className = 'word';
+    var flipper = document.createElement('div');
+    flipper.className = 'flipper';
+    flipper.appendChild(front);
+    flipper.appendChild(back);
+    wordDiv.appendChild(flipper);
+    wordList.appendChild(wordDiv);
+    if(!guessed) {
+      wordDiv.addEventListener('click', clickWord, true);
+    }
   });
 
   updateClues();
 }
 
 function clickWord(e) {
-  var word = e.target.innerHTML;
+  var word = e.target.innerText.toLowerCase();
+  var target = e.target.closest('.word');
+
+  // Don't penalize user for guessing the same wrong word twice
+  if (guessedWords.includes(word)) {
+    return;
+  }
+  console.log(guessedWords, word);
   guessedWords.push(word);
-  e.target.className = "word " + (goodWords.includes(word) ? "hit" : "miss");
+
+  target.classList.add(goodWords.includes(word) ? "hit" : "miss");
   if(goodWords.includes(word)){
     //then we have a correct word.. sub from rightleft
     rightLeft--;
@@ -78,7 +98,7 @@ function clickWord(e) {
   if(numMisses.innerHTML == MAXMISSES){
     endGame("lose");
   }
-  e.target.removeEventListener('click', clickWord, false);
+  target.removeEventListener('click', clickWord, false);
   updateClues();
 }
 
@@ -122,34 +142,26 @@ function clickStartGame() {
   if(mode=="sat"){
     //get SAT words to be intersection with our words..
     fetch("js/json/freevocabulary_words.json")
-      .then(resp => {
-        return resp.json();
-      })
-      .catch(err => {
-        console.warn("Error fetching", err);
-      })
+      .then(resp => resp.json())
+      .catch(err => console.warn("Error fetching", err))
       .then(body => {
         window.counters = body;
         for (var i = 0; window.counters.length>i; i++) {
           holdWords.push(window.counters[i].word);
         }
-      })
+      });
     }
   console.log("Here");
   fetch(dictionaryRoute)
-    .then(resp => {
-      return resp.json();
-    })
-    .catch(err => {
-      console.warn("Error fetching", err);
-    })
+    .then(resp => resp.json())
+    .catch(err => console.warn("Error fetching", err))
     .then(body => {
       window.wordVecs = body;
       window.allWords = Object.keys(body);
       console.log(allWords);
       //this is where I should do the union between the two arrays? try it
       //console.log(window.allWords);
-    })
+    });
     // .then(clickStartGame);
 
 
@@ -178,7 +190,7 @@ function clickStartGame() {
 function startGame() {
 
   // gen gameSize random words
-  var inter
+  var inter;
   if(mode=="sat")
     inter = _.intersection(holdWords, allWords); //get the intersection of the words
   inter=allWords;
@@ -277,12 +289,7 @@ function adjustSettings(){
   var select = document.getElementById("amountOfWords");
   console.log(select);
   var words = select.options[select.selectedIndex].value;
-
-  if(words=="complex"){
-    dictionaryRoute = "js/json/glove_small_dict.json"
-  }else{
-    dictionaryRoute = "js/json/wordvecs" + words + ".json";
-  }
+  dictionaryRoute = "js/json/wordvecs" + words + ".json";
 
   select = document.getElementById("diff");
   var diff = select.options[select.selectedIndex].value;
@@ -294,7 +301,6 @@ function adjustSettings(){
     MAXMISSES=1;
   }
 
-  document.getElementById('maxMisses').innerHTML = MAXMISSES;
 
   select = document.getElementById("mode");
   var mode = select.options[select.selectedIndex].value;
@@ -304,22 +310,5 @@ function adjustSettings(){
     mode="normal";
   }
 
-  popup1.style.opacity = "0";
-  popup1.style.display = "none";
-  popup1.style.visibility = "hidden";
-
   clickStartGame();
-}
-
-function showPopUp(){
-  popup1.style.opacity = "1";
-  popup1.style.display = "flex";
-  popup1.style.visibility = "visible";
-  console.log("Here");
-}
-
-function closePopUp(){
-  popup1.style.opacity = "0";
-  popup1.style.display = "flex";
-  popup1.style.visibility = "hidden";
 }

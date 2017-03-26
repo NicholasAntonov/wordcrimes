@@ -18,7 +18,7 @@
           <div class="container info-panel">
             <div class="row">
               <div class="box">
-                <a class="button" href="javascript:showPopUp()"><img src="img/gear.png" height="70%" width="40%"></a>
+                <a class="button" href="#popup1"><img class="menu-icon" src="img/gear.png"></a>
               </div>
               <h1 class="header">Word Crimes</h1>
               <div class="score-container">
@@ -88,42 +88,39 @@
     <div id="popup1" class="settingsOver">
       <div class="popup">
         <h2>Settings</h2>
-        <a class="close" href="javascript:closePopUp()">&times;</a>
+        <a class="close" href="#">&times;</a>
         <div class="settingsContent">
-          Adjust the difficulty, change the mode, or change the amount of words!
+          <p>Adjust the difficulty, change the mode, or change the amount of words!</p>
           <!-- Issac make this prettier !-->
           <br>
           <div>
-            <h3>Change the difficulty:</h3>
+            <label>Change the difficulty:</label>
             <select id="diff">
               <option value="easy">Easy</option>
               <option value="normal">Normal</option>
               <option value="hard">Hard</option>
             </select>
           </div>
-          <br>
+
           <div>
-            <h3>Change the amount of words:</h3>
+            <label>Change the amount of words:</label>
             <select id="amountOfWords">
               <option value="1000">1000</option>
               <option value="5000">5000</option>
               <option value="10000">10000</option>
               <option value="25000">25000</option>
-              <option value="complex">Complex Dictionary</option>
             </select>
           </div>
-          <br>
+
           <div>
-            <h3>Change the mode:</h3>
+            <label>Change the mode:</label>
             <select id="mode">
               <option value="normal">Normal</option>
               <option value="sat">SAT</option>
             </select>
           </div>
 
-          <div class="settingsContainer">
-            <button onclick="adjustSettings()">Reset the game with these settings!</button>
-          </div> 
+          <button class="save-and-reset" onclick="adjustSettings()">Reset the game with these settings!</button>
         </div>
       </div>
     </div>
