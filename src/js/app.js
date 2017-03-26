@@ -51,12 +51,24 @@ function populateUI(words, hints) {
   // add all the words to the word list
   _.each(words, word => {
     var guessed = guessedWords.includes(word);
-    var div = document.createElement("div");
-    div.innerHTML = word;
-    div.className = "word";
-    if(!guessed)
-      div.addEventListener('click', clickWord);
-    wordList.appendChild(div);
+    var front = document.createElement('div');
+    var back = document.createElement('div');
+    front.innerText = word;
+    back.innerText = word;
+    front.className = 'front';
+    back.className = 'back';
+
+    var wordDiv = document.createElement('div');
+    wordDiv.className = 'word';
+    var flipper = document.createElement('div');
+    flipper.className = 'flipper';
+    flipper.appendChild(front);
+    flipper.appendChild(back);
+    wordDiv.appendChild(flipper);
+    wordList.appendChild(wordDiv);
+    if(!guessed) {
+      wordDiv.addEventListener('click', clickWord, true);
+    }
   });
 
   updateClues();
@@ -122,34 +134,26 @@ function clickStartGame() {
   if(mode=="sat"){
     //get SAT words to be intersection with our words..
     fetch("js/json/freevocabulary_words.json")
-      .then(resp => {
-        return resp.json();
-      })
-      .catch(err => {
-        console.warn("Error fetching", err);
-      })
+      .then(resp => resp.json())
+      .catch(err => console.warn("Error fetching", err))
       .then(body => {
         window.counters = body;
         for (var i = 0; window.counters.length>i; i++) {
           holdWords.push(window.counters[i].word);
         }
-      })
+      });
     }
   console.log("Here");
   fetch(dictionaryRoute)
-    .then(resp => {
-      return resp.json();
-    })
-    .catch(err => {
-      console.warn("Error fetching", err);
-    })
+    .then(resp => resp.json())
+    .catch(err => console.warn("Error fetching", err))
     .then(body => {
       window.wordVecs = body;
       window.allWords = Object.keys(body);
       console.log(allWords);
       //this is where I should do the union between the two arrays? try it
       //console.log(window.allWords);
-    })
+    });
     // .then(clickStartGame);
 
 
@@ -178,7 +182,7 @@ function clickStartGame() {
 function startGame() {
 
   // gen gameSize random words
-  var inter
+  var inter;
   if(mode=="sat")
     inter = _.intersection(holdWords, allWords); //get the intersection of the words
   inter=allWords;

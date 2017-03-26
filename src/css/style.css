@@ -64,29 +64,71 @@ content {
   min-height: 300px;
 }
 
-.word-container .word-list > .word {
-  align-items: center;
-  background-color: #eee;
-  box-shadow: 0 1px 2px #888;
+
+/* FLIPPER */
+.front, .back {
+
   break-inside: avoid;
-  display: flex;
-  flex-direction: column;
   font-family: monospace;
   font-style: italic;
-  height: 40px;
   justify-content: center;
   margin-top: 10px;
   text-transform: uppercase;
-  transition: all 0.5s ease;
-  width: 150px;
+
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  backface-visibility: hidden;
+
+  user-select: none;
+  cursor: default;
 }
 
-.word-container .word-list > .word.miss {
+.flipper {
+  margin-top: 10px;
+  background-color: #eee;
+  position: relative;
+  height: 40px;
+  width: 150px;
+  box-shadow: 0 1px 2px #888;
+  border-radius: 3px;
+  transition: box-shadow 0.15s ease;
+}
+
+.word {
+  align-items: center;
+  perspective: 1000px;
+}
+
+.word.miss .flipper, .word.hit .flipper {
+  transform: rotateY(180deg);
+}
+
+.flipper {
+  transition: 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.front {
+  z-index: 2;
+  transform: translateY(-50%) translateX(-50%) rotateY(0deg);
+}
+
+.back {
+  z-index: 0;
+  transform: translateY(-50%) translateX(-50%) rotateY(180deg);
+}
+
+.word-container .word-list > .word.miss .flipper {
   background-color: #fcc;
   text-decoration: line-through;
 }
 
-.word-container .word-list > .word.hit {
+
+.word-container .word-list > .word.hit .flipper {
   background-color: #cfc;
 }
 
@@ -215,6 +257,8 @@ button {
   margin: 10px auto 0 auto;
   min-width: 100px;
   padding: 8px 12px 8px 12px;
+  cursor: pointer;
+  user-select: none;
 }
 
 button:focus {
