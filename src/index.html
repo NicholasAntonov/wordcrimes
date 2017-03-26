@@ -68,12 +68,17 @@
       <div>Generating Game...</div>
       <div class="subhead">Please wait a moment</div>
     </div>
-    <div class="overlay" id="loosingOverlay" style="display:none;">
+    <div class="overlay" id="loosingOverlay" style="display: none;">
       <div> Sorry you loose! </div>
-      <div class="subhead">If you want to play again click "New Game" </div>
+      <div class="subhead">If you want to play again please click "New Game" </div>
       <div class="container">
         <button onclick="clickStartGame()">New Game</button>
       </div>
     </div>
+    <div class="overlay" id="winningOverlay" style="display: none;">
+      <div> Congratulations, you win! </div>
+      <div class="container">
+        <button onclick="clickStartGame()">Play Again!</button>
+      </div>
   </body>
 </html>

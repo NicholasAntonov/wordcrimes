@@ -3,6 +3,7 @@
 
 gameSize = 26;
 answerCount = 9;
+rightLeft = answerCount;
 MAXMISSES = 3;
 
 function cluster () {
@@ -62,6 +63,13 @@ function clickWord(e) {
   var word = e.target.innerHTML;
   guessedWords.push(word);
   e.target.className = "word " + (goodWords.includes(word) ? "hit" : "miss");
+  if(goodWords.includes(word)){
+    //then we have a correct word.. sub from rightleft
+    rightLeft--;
+    if(rightLeft==0){
+      endGame("win");
+    }
+  }
   numMisses.innerHTML = _.pull(_.clone(guessedWords), ...goodWords).length;
   //check to see if numMisses exceeds limit
   if(numMisses.innerHTML == MAXMISSES){
@@ -108,10 +116,12 @@ function synthesizeHint(words, clues, cluster) {
 
 function clickStartGame() {
   loosingOverlay.style.display = "none";
+  winningOverlay.style.display = "none";
   window.requestAnimationFrame(()=>{
     loadingOverlay.style.display = "flex";
     content.style.filter="blur(5px)";
     numMisses.innerHTML = 0;
+    rightLeft = answerCount;
 
     // empty the list of clues and words
     var clueList = document.querySelector("#clues");
@@ -192,7 +202,6 @@ function endGame(which) {
     window.requestAnimationFrame(()=>{
       loosingOverlay.style.display = "flex";
       content.style.filter="blur(5px)";
-      numMisses.innerHTML = 0;
 
       // empty the list of clues and words
       var clueList = document.querySelector("#clues");
@@ -204,5 +213,17 @@ function endGame(which) {
     });
   }else{
     //win
+    window.requestAnimationFrame(()=>{
+      winningOverlay.style.display = "flex";
+      content.style.filter="blur(5px)";
+
+      // empty the list of clues and words
+      var clueList = document.querySelector("#clues");
+      while (clueList.hasChildNodes()) clueList.removeChild(clueList.lastChild);
+      var wordList = document.querySelector("#words");
+      while (wordList.hasChildNodes()) wordList.removeChild(wordList.lastChild);
+
+      
+    });
   }
 }
