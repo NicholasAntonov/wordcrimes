@@ -107,6 +107,7 @@ function synthesizeHint(words, clues, cluster) {
 }
 
 function clickStartGame() {
+  loosingOverlay.style.display = "none";
   window.requestAnimationFrame(()=>{
     loadingOverlay.style.display = "flex";
     content.style.filter="blur(5px)";

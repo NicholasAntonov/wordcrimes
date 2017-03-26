@@ -139,7 +139,7 @@ footer {
 
 /* Content of footer so the width is at most 500px */
 .container {
-  margin: auto;
+  /*margin: auto;*/
   width: 500px;
 }
 
@@ -242,8 +242,4 @@ button:focus {
   font-size: 20px;
   font-style: italic;
   font-weight: normal;
-}
-
-overlay .inital{
-  
 }
