@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
-    <content>
+    <content id="content">
       <div class="flex-grow">
         <div class="word-container">
           <div class="container info-panel">
@@ -29,9 +29,12 @@
             </div>
             <div class="row">
               <p>
-                You are a detective in the field and the only resource you have is an AI that is trained to connect clues to the crime. Your task is to find the right word associations among a grid of words usng hints given by the AI. If you guess the wrong words too many times, you won't have accurate enough clues to solve the case.
+                You are a detective in the field and the only resource you have is an AI that is trained to connect clues to the crime. Your task is to find the right word associations among a grid of words using hints given by the AI. If you guess the wrong words too many times, you won't have accurate enough clues to solve the case.
               </p>
             </div>
+          </div>
+          <div class="container">
+            <button onclick="clickStartGame()">New Game</button>
           </div>
           <div class="clue-split">
             <div class="clue-column">
@@ -55,11 +58,15 @@
           </div>
         </div>
       </div>
-      <footer>
+      <!-- <footer>
         <div class="container">
           Totally footer
         </div>
-      </footer>
+      </footer> -->
+    </content>
+    <div class="overlay" id="loadingOverlay">
+      <div>Generating Game...</div>
+      <div class="subhead">Please wait a moment</div>
     </div>
   </body>
 </html>

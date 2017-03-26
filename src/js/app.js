@@ -61,6 +61,7 @@ function clickWord(e) {
   var word = e.target.innerHTML;
   guessedWords.push(word);
   e.target.className = "word " + (goodWords.includes(word) ? "hit" : "miss");
+  numMisses.innerHTML = _.pull(guessedWords, ...goodWords).length;
   console.log(e.target.className);
   e.target.removeEventListener('click', clickWord, false);
   updateClues();
@@ -88,7 +89,7 @@ function updateClues() {
 
 function synthesizeHint(words, clues, cluster) {
   // remove all the already guessed words from the cluster
-  _.remove(cluster, w => guessedWords.includes(w));
+  _.pull(cluster, ...guessedWords);
 
   var blob = words.join(" ");
   console.log(clues.join(", "), '->', cluster.join(", "));
@@ -101,8 +102,25 @@ function synthesizeHint(words, clues, cluster) {
   return [cluster.length, clues[0] + " CHEAT"]; // shit
 }
 
+function clickStartGame() {
+  window.requestAnimationFrame(()=>{
+    loadingOverlay.style.display = "flex";
+    content.style.filter="blur(5px)";
+    numMisses.innerHTML = 0;
+
+    // empty the list of clues and words
+    var clueList = document.querySelector("#clues");
+    while (clueList.hasChildNodes()) clueList.removeChild(clueList.lastChild);
+    var wordList = document.querySelector("#words");
+    while (wordList.hasChildNodes()) wordList.removeChild(wordList.lastChild);
+
+    setTimeout(startGame, 50);
+  });
+}
+
 // Starts a new game
 function startGame() {
+
   // gen gameSize random words
   totalWords = randomWords(gameSize, allWords);
 
@@ -133,18 +151,22 @@ function startGame() {
           return Word2VecUtils.subVecs(avgWords(cluster), badWordsSum);
         });
   hints = hintVectors
-        .map(hint => Word2VecUtils.getNClosestMatches(3, hint).map(arr => arr[0]));
+        .map(hint => Word2VecUtils.getNClosestMatches(4, hint).map(arr => arr[0]));
   console.log(hints);
 
   // |> findNClosest (numberOfHints / group.len)
 
   populateUI(totalWords);
+
+  loadingOverlay.style.display = "none";
+  content.style.filter="none";
 }
 
 window.onload = function() {
+  content.style.filter="blur(5px)";
 
-  //var dictionaryRoute = "js/json/wordvecs5000.json";
-  var dictionaryRoute = "js/json/glove_small_dict.json";
+  var dictionaryRoute = "js/json/wordvecs25000.json";
+  //var dictionaryRoute = "js/json/glove_small_dict.json";
 
   fetch(dictionaryRoute)
     .then(resp => {
@@ -157,5 +179,5 @@ window.onload = function() {
       window.wordVecs = body;
       window.allWords = Object.keys(body);
     })
-    .then(startGame);
+    .then(clickStartGame);
 };
