@@ -64,12 +64,10 @@ content {
   min-height: 300px;
 }
 
-/* FLIPPER */
-.flipper, .front, .back {
+.word-container .word-list > .word {
   align-items: center;
   background-color: #eee;
   box-shadow: 0 1px 2px #888;
-  border-radius: 3px;
   break-inside: avoid;
   display: flex;
   flex-direction: column;
@@ -77,54 +75,18 @@ content {
   font-style: italic;
   height: 40px;
   justify-content: center;
+  margin-top: 10px;
   text-transform: uppercase;
-  transition: box-shadow 0.15s ease;
+  transition: all 0.5s ease;
   width: 150px;
 }
 
-.flipper {
-  margin-top: 10px;
-}
-
-.word {
-  align-items: center;
-  perspective: 1000px;
-}
-
-.word.miss .flipper, .word.hit .flipper {
-  transform: rotateY(180deg);
-}
-
-.flipper {
-  transition: 0.6s;
-  transform-style: preserve-3d;
-  position: relative;
-}
-
-.front, .back {
-  backface-visibility: hidden;
-
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.front {
-  z-index: 2;
-  transform: rotateY(0deg);
-}
-
-.back {
-  z-index: 0;
-  transform: rotateY(180deg);
-}
-
-.word-container .word-list > .word.miss .back {
+.word-container .word-list > .word.miss {
   background-color: #fcc;
   text-decoration: line-through;
 }
 
-.word-container .word-list > .word.hit .back {
+.word-container .word-list > .word.hit {
   background-color: #cfc;
 }
 
@@ -133,6 +95,8 @@ content {
 }
 
 .word-container .word-list > .word:not(.miss):not(.hit):hover {
+  background-color: #fff;
+  box-shadow: 0 4px 8px #888;
   z-index: 3;
 }
 
@@ -188,7 +152,6 @@ footer {
 .info-panel .row {
   display: flex;
   flex-direction: row;
-  align-items: center;
 }
 
 .info-panel .row .header {
@@ -334,9 +297,4 @@ button:focus {
 .settingsContainer {
   margin: 0 auto;
   width: 50%;
-}
-
-.menu-icon {
-  width: 40px;
-  height: 40px;
 }
