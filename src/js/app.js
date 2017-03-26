@@ -114,12 +114,12 @@ function synthesizeHint(words, clues, cluster) {
   console.log(clues.join(", "), '->', cluster.join(", "));
   for(var i = 0; i < clues.length; i++) {
     var hint = clues[i];
-    if(blob.indexOf(hint) == -1){ // because "designer" can be inside "designers"
+    if(blob.indexOf(hint) === -1 && hint.indexOf(blob) === -1){ // because "designer" can be inside "designers"
       return [cluster.length, hint];
     }
-      
   }
-  return [cluster.length, clues[0] + " CHEAT"]; // shit
+  console.log('GIVING A CHEATING HINT', clues[0]);
+  return [cluster.length, clues[0]]; // shit
 }
 
 function clickStartGame() {
