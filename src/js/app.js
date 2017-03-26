@@ -125,7 +125,7 @@ function synthesizeHint(words, clues, cluster) {
 function clickStartGame() {
 
   if(mode=="sat"){
-    //get SAT words to be intersection with our words..
+    //get SAT words to be intersectionsection with our words..
     fetch("js/json/freevocabulary_words.json")
       .then(resp => {
         return resp.json();
@@ -181,15 +181,18 @@ function clickStartGame() {
 function startGame() {
 
   // gen gameSize random words
-  var inter
+  var intersection;
   if(mode=="sat") {
-    inter = _.intersection(holdWords, allWords); //get the intersection of the words
+    intersection = _.intersection(holdWords, allWords); //get the intersection of the words
   }
   else {
-    inter=allWords;
+    intersection = allWords;
   }
-  totalWords = randomWords(gameSize, inter);
-  console.log('TOTAL LEN', inter.length);
+  console.log('INTERSECTION LENGTH', intersection.length);
+  do {
+    console.log('generatingwords');
+    totalWords = randomWords(gameSize, intersection);
+  } while(_.uniq(totalWords).length !== totalWords.length);
 
   guessedWords = [];
 
