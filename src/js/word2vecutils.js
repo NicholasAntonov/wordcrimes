@@ -129,3 +129,7 @@ var Word2VecUtils = (function() {
     getCosSim: getCosSim
   };
 })();
+
+if (typeof module !== 'undefined') {
+  module.exports = Word2VecUtils;
+}

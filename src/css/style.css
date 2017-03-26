@@ -65,25 +65,33 @@ content {
 }
 
 /* FLIPPER */
-.flipper, .front, .back {
-  align-items: center;
-  background-color: #eee;
-  box-shadow: 0 1px 2px #888;
-  border-radius: 3px;
+.front, .back {
   break-inside: avoid;
-  display: flex;
-  flex-direction: column;
   font-family: monospace;
   font-style: italic;
-  height: 40px;
   justify-content: center;
   text-transform: uppercase;
-  transition: box-shadow 0.15s ease;
-  width: 150px;
+
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  backface-visibility: hidden;
+
+  user-select: none;
+  cursor: default;
 }
 
 .flipper {
   margin-top: 10px;
+  background-color: #eee;
+  position: relative;
+  height: 40px;
+  width: 150px;
+  box-shadow: 0 1px 2px #888;
+  border-radius: 3px;
+  transition: box-shadow 0.15s ease;
 }
 
 .word {
@@ -101,30 +109,22 @@ content {
   position: relative;
 }
 
-.front, .back {
-  backface-visibility: hidden;
-
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
 .front {
   z-index: 2;
-  transform: rotateY(0deg);
+  transform: translateY(-50%) translateX(-50%) rotateY(0deg);
 }
 
 .back {
   z-index: 0;
-  transform: rotateY(180deg);
+  transform: translateY(-50%) translateX(-50%) rotateY(180deg);
 }
 
-.word-container .word-list > .word.miss .back {
+.word-container .word-list > .word.miss .flipper {
   background-color: #fcc;
   text-decoration: line-through;
 }
 
-.word-container .word-list > .word.hit .back {
+.word-container .word-list > .word.hit .flipper {
   background-color: #cfc;
 }
 
@@ -252,6 +252,8 @@ button {
   margin: 10px auto 0 auto;
   min-width: 100px;
   padding: 8px 12px 8px 12px;
+  cursor: pointer;
+  user-select: none;
 }
 
 button:focus {
