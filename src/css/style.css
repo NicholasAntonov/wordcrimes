@@ -51,8 +51,8 @@ content {
 .word-container .word-scroll {
   border-radius: 2px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  max-height: 300px;
-  overflow-y: auto;
+  height: 300px;
+  overflow-y: scroll;
 }
 
 .word-container .word-list {
@@ -60,6 +60,8 @@ content {
   column-count: 2;
   column-gap: 10px;
   padding: 10px;
+  width: 330px;
+  min-height: 300px;
 }
 
 .word-container .word-list > .word {

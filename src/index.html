@@ -2,6 +2,9 @@
 <html lang="en">
   <head>
     <title>Word Crimes</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
     <script src="https://rawgit.com/lodash/lodash/4.17.4/dist/lodash.min.js"></script>
     <script src="js/word2vecutils.js"></script>
     <script src="js/app.js"></script>
@@ -9,6 +12,54 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
-
+    <content>
+      <div class="flex-grow">
+        <div class="word-container">
+          <div class="container info-panel">
+            <div class="row">
+              <h1 class="header">Word Crimes</h1>
+              <div class="score-container">
+                <div class="score-box">
+                  <div class="title">Misses</div>
+                  <div class="score">
+                    <span id="numMisses">0</span>/<span id="maxMisses">3</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <p>
+                You are a detective in the field and the only resource you have is an AI that is trained to connect clues to the crime. Your task is to find the right word associations among a grid of words usng hints given by the AI. If you guess the wrong words too many times, you won't have accurate enough clues to solve the case.
+              </p>
+            </div>
+          </div>
+          <div class="clue-split">
+            <div class="clue-column">
+              <h2>Words</h2>
+              <div class="word-scroll">
+                <div class="word-list" id="words">
+                  <!--<div class="word miss">apple</div>
+                  <div class="word hit">banana</div>
+                  <div class="word">zebra</div>-->
+                </div>
+              </div>
+            </div>
+            <div class="clue-column">
+              <h2>Clues</h2>
+              <div class="clue-block" id="clues">
+                <div class="clue">
+                  <!-- <span class="num">3</span> - <span class="word">Color</span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <div class="container">
+          Totally footer
+        </div>
+      </footer>
+    </div>
   </body>
 </html>
