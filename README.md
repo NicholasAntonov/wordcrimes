@@ -1,8 +1,10 @@
-# Word Crime
+# Word Crimes
 
 ###### This project was made for [duckhacks](http://www.duckhacks.com) at [Stevens Institute of Technology](https://www.stevens.edu)
 
 ###### Update: It won! "Best Overall" for Duckhacks 2017
+
+[Play Word Crimes Here!](http://imadethis.website/wordcrimes/)
 
 ## Premise
 You, the player, are a detective in the field, and the only resource you have is an AI that is trained to connect clues.
